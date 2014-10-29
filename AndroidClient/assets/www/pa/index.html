@@ -1,0 +1,90 @@
+<html>
+<head>
+	<title>Personal Assistant</title>
+	<link rel="stylesheet" type="text/css" href="style/mobile.css"/>
+	<script type="text/javascript" src="js/jquery-1.2.6.pack.js"></script>
+	<script type="text/javascript" src="js/phonegap.js"></script>
+	<script type="text/javascript" src="js/smsplugin.js"></script>
+	<meta name="viewport" content="user-scalable=no, width=device-width"/>
+	<script>
+		var $j = jQuery.noConflict();
+		function loadPage(url,title)
+		{
+			_beforeLoad();
+			$j('#category').css('display','none');
+			$j('#content').load(url);
+			$j('#content').css('display','');
+			$j('#menuBtn').css('display','');
+
+			$j('#tlabel').html(title);
+			_afterLoad();
+		}
+		function _beforeLoad()
+		{
+			$j('body').append('<div id="progress">Loading ...</div>');
+		}
+		function _afterLoad()
+		{
+			$j('#progress').remove();
+		}
+		function backMenu()
+		{
+			var showBack = $j('#menuBtn').css('display');
+			if (showBack != 'none')
+			{
+				$j('#category').css('display','');
+				$j('#content').css('display','none');
+				$j('#menuBtn').css('display','none');
+				$j('#tlabel').html('Personal Assistant');
+			}
+			else
+			{
+				navigator.app.exitApp();
+			}
+		}
+		document.addEventListener("backbutton", onBackKeyDown, true);
+		function onBackKeyDown(e)
+		{
+			backMenu();
+		}
+	</script>
+	<script type="text/javascript" src="js/pa.js"></script>
+</head>
+<body>
+	<div id="title">
+    	<a id="tlabel">Personal Assistant</a>
+    </div>
+    <div id="category">
+		<div style="font-size:0;height:25"></div>
+		<ul>
+			<li>
+				<a href="javascript:loadPage('lost.html','Lost Way Service')">Lost Way Service</a>
+			</li>
+			<li>
+				<a href="javascript:loadPage('translation.html','Translation Service')">Translation Service</a>
+			</li>
+			<li>
+				<a href="javascript:loadPage('emergency.html','Emergency Service')">Emergency Service</a>
+			</li>
+			<li>
+				<a href="javascript:getRequest('pc.changwy.com/requests.txt');">aaa</a>
+			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="javascript:loadPage('myRequests.html','My Requests')">My Requests</a>
+			</li>
+		</ul>		
+		<ul>
+			<li>
+				<a href="javascript:loadPage('setting.html','Settings')" style="font-weight:normal">Setting</a>
+			</li>
+		</ul>
+		<div style="font-size:0;height:5"></div>
+	</div>
+    <div id="content">
+	</div>
+
+	<div id="menuBtn" class="backBtn" style="cursor:hand;display:none" onclick="backMenu()">Back</div>
+</body>
+</html>
